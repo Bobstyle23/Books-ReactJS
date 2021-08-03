@@ -1,25 +1,49 @@
-import React, { Component, createContext } from "react";
+// import React, { Component, createContext } from "react";
+
+// export const ThemeContext = createContext();
+
+// class ThemeContextProvider extends Component {
+//   state = {
+//     isLightTheme: true,
+//     light: { syntax: "#555", ui: "#ddd", bg: "#eee" },
+//     dark: { syntax: "#ddd", ui: "#333", bg: "#555" },
+//   };
+//   toggleTheme = () => [
+//     this.setState({ isLightTheme: !this.state.isLightTheme }),
+//   ];
+//   render() {
+//     return (
+//       <ThemeContext.Provider
+//         value={{ ...this.state, toggleTheme: this.toggleTheme }}
+//       >
+//         {this.props.children}
+//       </ThemeContext.Provider>
+//     );
+//   }
+// }
+
+// export default ThemeContextProvider;
+
+import React, { createContext, useState } from "react";
 
 export const ThemeContext = createContext();
 
-class ThemeContextProvider extends Component {
-  state = {
+function ThemeContextProvider(props) {
+  const [isLightTheme, setIsLightTheme] = useState({
     isLightTheme: true,
     light: { syntax: "#555", ui: "#ddd", bg: "#eee" },
     dark: { syntax: "#ddd", ui: "#333", bg: "#555" },
+  });
+
+  const toggleTheme = () => {
+    setIsLightTheme(!isLightTheme);
   };
-  toggleTheme = () => [
-    this.setState({ isLightTheme: !this.state.isLightTheme }),
-  ];
-  render() {
-    return (
-      <ThemeContext.Provider
-        value={{ ...this.state, toggleTheme: this.toggleTheme }}
-      >
-        {this.props.children}
-      </ThemeContext.Provider>
-    );
-  }
+
+  return (
+    <ThemeContext.Provider value={{ ...isLightTheme, toggleTheme }}>
+      {props.children}
+    </ThemeContext.Provider>
+  );
 }
 
 export default ThemeContextProvider;
